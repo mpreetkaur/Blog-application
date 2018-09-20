@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -43,7 +44,7 @@ namespace BlogWebsite.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Title,Body,MediaUrl,Published")] BlogPost blogPost)
+        public ActionResult Create([Bind(Include = "Id,Title,Body,MediaUrl,Published")] BlogPost blogPost, HttpPostedFileBase image)
         {
             if (ModelState.IsValid)
             {
@@ -58,6 +59,13 @@ namespace BlogWebsite.Controllers
                     ModelState.AddModelError("Title", "The title must be unique");
                     return View(blogPost);
                 }
+                if (ImageUploadValidator.IsWebFriendlyImage(image))
+                {
+                    var fileName = Path.GetFileName(image.FileName);
+                    image.SaveAs(Path.Combine(Server.MapPath("~/Uploads/"), fileName));
+                    blogPost.MediaURL = "/Uploads/" + fileName;
+                }
+
                 blogPost.Slug = Slug;
                 blogPost.Created = DateTimeOffset.Now;
                 db.Posts.Add(blogPost);
@@ -85,15 +93,14 @@ namespace BlogWebsite.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Title,Body,MediaUrl,Published")] BlogPost blogPost)
+        public ActionResult Edit([Bind(Include = "Id,Title,Body,MediaUrl,Published")] BlogPost blogPost, HttpPostedFileBase image)
         {
             if (ModelState.IsValid)
             {
                 var blog = db.Posts.Where(p => p.Id == blogPost.Id).FirstOrDefault();
                 blog.Body = blogPost.Body;
-                blog.MediaURL = blogPost.MediaURL;
                 blog.Published = blogPost.Published;
-                blog.Slug = blogPost.Slug;
+                //blog.Slug = blogPost.Slug;
                 blog.Title = blogPost.Title;
                 blog.Updated = DateTime.Now;
 
@@ -103,11 +110,18 @@ namespace BlogWebsite.Controllers
                     ModelState.AddModelError("Title", "Invalid title");
                     return View(blogPost);
                 }
-                if (db.Posts.Any(p => p.Slug == Slug))
+                if (db.Posts.Any(p => p.Slug == Slug && p.Id != blog.Id))
                 {
                     ModelState.AddModelError("Title", "The title must be unique");
                     return View(blogPost);
                 }
+                if (ImageUploadValidator.IsWebFriendlyImage(image))
+                {
+                    var fileName = Path.GetFileName(image.FileName);
+                    image.SaveAs(Path.Combine(Server.MapPath("~/Uploads/"), fileName));
+                    blog.MediaURL = "/Uploads/" + fileName;
+                }
+
                 blogPost.Created = DateTimeOffset.Now;
                 db.SaveChanges();
                 return RedirectToAction("Index");
