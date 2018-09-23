@@ -1,0 +1,29 @@
+﻿.navbar-default {
+    background-color: #1e1b1b;
+    border-color: #cac5c5;
+    height: 55px;
+    font-size: 16px;
+}
+.navbar-default .navbar-nav > li > a {
+     color: #e7e2e2;
+}
+.navbar-default .navbar-nav > li > a:hover {
+    color: skyblue;
+}
+h2, .h2 {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+}
+
+#mainNav {
+    background-color: black;
+    height: 75px
+}
+h1{
+    padding-top: 30px
+}
+.img-circle {
+    height: 100%;
+}
+section {
+    padding: 0px
+}

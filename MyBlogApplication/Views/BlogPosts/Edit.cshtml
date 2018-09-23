@@ -1,91 +1,100 @@
 ﻿@model MyBlogApplication.Models.BlogPost
-
+<!-- Bootstrap Core CSS -->
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<!-- Custom Fonts -->
+<link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+<link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+<!-- Theme CSS -->
+<link href="~/Content/agency.min.css" rel="stylesheet" />
+<link href="~/Content/styles.css" rel="stylesheet" />
 @{
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
+<h1 class="section-heading">Edit</h1>
 
 @using (Html.BeginForm("Edit", "BlogPosts", FormMethod.Post, new { enctype = "Multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <h4>BlogPost</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Id)
+<div class="form-horizontal">
+    <h3 class="section-subheading text-muted">BlogPost</h3>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.Id)
 
-        @*<div class="form-group">
-                @Html.LabelFor(model => model.Created, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Created, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Created, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.Updated, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Updated, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Updated, "", new { @class = "text-danger" })
-                </div>
-            </div>*@
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+    @*<div class="form-group">
+            @Html.LabelFor(model => model.Created, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        @*<div class="form-group">
-                @Html.LabelFor(model => model.Slug, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Slug, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Slug, "", new { @class = "text-danger" })
-                </div>
-            </div>*@
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Body, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Body, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Body, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Created, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Created, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.MediaURL, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Updated, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @*@Html.EditorFor(model => model.MediaURL, new { htmlAttributes = new { @class = "form-control" } })*@
-                <input name="image" type="file" class="form-control" id="fileUpload" />
-                @Html.ValidationMessageFor(model => model.MediaURL, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Updated, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Updated, "", new { @class = "text-danger" })
             </div>
-        </div>
+        </div>*@
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Published, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    @*<div class="form-group">
+            @Html.LabelFor(model => model.Slug, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.Published)
-                    @Html.ValidationMessageFor(model => model.Published, "", new { @class = "text-danger" })
-                </div>
+                @Html.EditorFor(model => model.Slug, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Slug, "", new { @class = "text-danger" })
             </div>
-        </div>
+        </div>*@
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+    <div class="form-group">
+        @Html.LabelFor(model => model.Body, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Body, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Body, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.MediaURL, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @*@Html.EditorFor(model => model.MediaURL, new { htmlAttributes = new { @class = "form-control" } })*@
+            <input name="image" type="file" class="form-control" id="fileUpload" />
+            @Html.ValidationMessageFor(model => model.MediaURL, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Published, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <div class="checkbox">
+                @Html.EditorFor(model => model.Published)
+                @Html.ValidationMessageFor(model => model.Published, "", new { @class = "text-danger" })
             </div>
         </div>
     </div>
-}
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-default" />
+            <button class="btn btn-default bkToList">
+                @Html.ActionLink("Back to List", "Index")
+            </button>
+        </div>
+    </div>
 </div>
+}
 @section scripts{
     <script src="~/Scripts/tinymce/tinymce.min.js"></script>
     <script src="~/Scripts/tinymce/jquery.tinymce.min.js"></script>

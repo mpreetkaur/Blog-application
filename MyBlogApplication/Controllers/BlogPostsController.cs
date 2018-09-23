@@ -35,6 +35,7 @@ namespace BlogWebsite.Controllers
             return View(blogPost);
         }
         // GET: BlogPosts/Create
+        [Authorize(Roles ="Admin")]
         public ActionResult Create()
         {
             return View();
@@ -44,6 +45,8 @@ namespace BlogWebsite.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
+
         public ActionResult Create([Bind(Include = "Id,Title,Body,MediaUrl,Published")] BlogPost blogPost, HttpPostedFileBase image)
         {
             if (ModelState.IsValid)

@@ -46,9 +46,7 @@
                     <li>
                         <a class="page-scroll" href="/">Home</a>
                     </li>
-                    <li>
-                       @Html.ActionLink("Posts", "", "BlogPosts")
-                    </li>
+                    <li>@Html.ActionLink("Posts", "", "BlogPosts")</li>
                     @using Microsoft.AspNet.Identity
                     @if (Request.IsAuthenticated)
                     {

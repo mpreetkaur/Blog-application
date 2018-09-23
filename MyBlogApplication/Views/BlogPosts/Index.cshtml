@@ -1,77 +1,125 @@
 ﻿@model IEnumerable<MyBlogApplication.Models.BlogPost>
-
+<!-- Bootstrap Core CSS -->
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<!-- Custom Fonts -->
+<link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+<link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+<!-- Theme CSS -->
+<link href="~/Content/agency.min.css" rel="stylesheet" />
+<link href="~/Content/styles.css" rel="stylesheet" />
 @{
     ViewBag.Title = "Index";
 }
+@*<table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Created)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Updated)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Slug)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Body)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MediaURL)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Published)
+            </th>
+            <th></th>
+        </tr>
 
-<h2>Index</h2>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Created)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Updated)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Slug)
+            </td>
+            <td>
+                @Html.Raw(item.Body)
+            </td>
+            <td>
+                @if (item.MediaURL != null)
+                {
+                    <img class="img-responsive" src="@item.MediaURL" alt="">
+                }
+                @Html.DisplayFor(modelItem => item.MediaURL)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Published)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { Slug = item.Slug }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Created)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Updated)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Slug)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Body)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MediaURL)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Published)
-        </th>
-        <th></th>
-    </tr>
+        </tr>
 
+        }
+
+    </table>*@
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12 text-center">
+            <h1 class="section-heading">Index</h1>
+            <h3 class="section-subheading text-muted">
+                @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                {
+                    @Html.ActionLink("Create New", "Create")
+                }
+            </h3>
+        </div>
+    </div>
     @foreach (var item in Model)
     {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Created)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Updated)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Slug)
-        </td>
-        <td>
-            @Html.Raw(item.Body)
-        </td>
-        <td>
-            @*@if (item.MediaURL != null)
-            {
-
-            <img class="img-responsive" src="@item.MediaURL" alt="">
-            }*@
-            @Html.DisplayFor(modelItem => item.MediaURL)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Published)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-            @Html.ActionLink("Details", "Details", new { Slug = item.Slug }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-        </td>
-
-    </tr>
-       
+        <div class="row">
+            <div class="col-lg-12">
+                <ul class="timeline">
+                    <li>
+                        <div class="timeline-image">
+                            @if (item.MediaURL != null)
+                            {
+                                <img class="img-circle img-responsive" src="@item.MediaURL" alt="">
+                            }
+                        </div>
+                        <div class="timeline-panel">
+                            <div class="timeline-heading">
+                                <h4>@Html.DisplayFor(modelItem => item.Title)</h4>
+                                <h5>
+                                    @Html.DisplayNameFor(model => model.Created) : @Html.DisplayFor(modelItem => item.Created)
+                                </h5>
+                            </div>
+                            <div class="timeline-body">
+                                <p class="text-muted">@Html.Raw(item.Body)</p>
+                                <p>@Html.DisplayNameFor(model => model.Published) : @Html.DisplayFor(modelItem => item.Published)</p>
+                            </div>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                            @Html.ActionLink("Details", "Details", new { Slug = item.Slug }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
     }
-
-</table>
+</div>
