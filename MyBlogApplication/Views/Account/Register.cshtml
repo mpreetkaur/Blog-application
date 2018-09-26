@@ -1,14 +1,25 @@
 ﻿@model MyBlogApplication.Models.RegisterViewModel
+<!-- Bootstrap Core CSS -->
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<!-- Custom Fonts -->
+<link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+<link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+<!-- Theme CSS -->
+<link href="~/Content/agency.min.css" rel="stylesheet" />
+<link href="~/Content/styles.css" rel="stylesheet" />
 @{
     ViewBag.Title = "Register";
 }
 
-<h2>@ViewBag.Title.</h2>
+<h1 class="section-heading">@ViewBag.Title.</h1>
 
 @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
-    <h4>Create a new account.</h4>
+    <h4 class="section-subheading text-muted">Create a new account.</h4>
     <hr />
     @Html.ValidationSummary("", new { @class = "text-danger" })
     <div class="form-group">

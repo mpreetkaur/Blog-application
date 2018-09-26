@@ -27,3 +27,11 @@ h1{
 section {
     padding: 0px
 }
+.form-control{
+    display: inline;
+    margin: 20px
+}
+#portfolio .portfolio-item .portfolio-caption 
+{
+    max-width: 500px
+}

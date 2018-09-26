@@ -14,77 +14,6 @@
     ViewBag.Title = "Details";
 }
 
-@*<div>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Created)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Created)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Updated)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Updated)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Slug)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Slug)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Body)
-        </dt>
-
-        <dd>
-            @Html.Raw(Model.Body)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.MediaURL)
-        </dt>
-
-        <dd>
-            @if (Model.MediaURL != null)
-            {
-
-                <img class="img-responsive" src="@Model.MediaURL" alt="">
-            }
-
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Published)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Published)
-        </dd>
-
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>*@
-
 <section id="portfolio" class="bg-light-gray">
     <section class="container">
         <div class="row">
@@ -98,14 +27,12 @@
                 <div class="portfolio-link" >
                     @if (Model.MediaURL != null)
                     {
-
                         <img class="img-responsive" src="@Model.MediaURL" alt="">
                     }
                 </div>
                 <div class="portfolio-caption">
                     <h3>@Html.DisplayFor(model => model.Title)</h3>
                     <div class="dl-horizontal">
-
 
                         <div class="col-md-4" style="font-weight: bold">@Html.DisplayNameFor(model => model.Title)</div>
                         <div class="col-md-8">@Html.DisplayFor(model => model.Title)</div>
@@ -125,6 +52,48 @@
                         {
                             <div class="col-md-4" style="font-weight: bold"> @Html.DisplayNameFor(model => model.Updated)</div>
                             <div class="col-md-8">@Html.DisplayFor(model => model.Updated)</div>
+                        }
+                        <div class="col-md-12" style="font-weight: bold; text-align: left; font-size: 16px"> Comments :</div>
+
+                        <div>
+
+                            @foreach (var comment in Model.Comments)
+                            {
+                                <hr />
+                                @comment.Author.DisplayName
+                                <p style="text-align: left; margin-left: 70px">
+                                    @comment.Body
+                                    <span style="font-size: 10px; text-align: right">
+                                        - @comment.Created.ToString("dd/mm/yyyy hh:mm")
+                                    </span>
+                                    @if (User.Identity.IsAuthenticated &&
+                                    (User.IsInRole("Admin") || User.IsInRole("Moderator")))
+                                    {
+                                        <div>
+                                            <a href="@Url.Action("Edit", "Comments", new { id = comment.Id } )">Edit Comment</a>
+                                            | <a href="@Url.Action("Delete", "Comments", new { id = comment.Id })">Delete Comment</a>
+                                        </div>
+                                    }
+                                </p>
+                            }
+                        </div>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <div style="font-weight: bold">
+                                Submit your comment!
+                            </div>
+                            <div>
+                                @using (Html.BeginForm("DetailsSlug", "BlogPosts", FormMethod.Post))
+                                {
+                                    <input type="hidden" name="slug" value="@Model.Slug" />
+                                    <textarea name="Body"></textarea>
+                                    if (ViewBag.ErrorMessage != null)
+                                    {
+                                        <span>@ViewBag.ErrorMessage</span>
+                                    }
+                                    <input type="submit" value="submit" />
+                                }
+                            </div>
                         }
                         <p>
                             @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |

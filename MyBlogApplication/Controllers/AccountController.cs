@@ -13,6 +13,7 @@ using MyBlogApplication.Models;
 namespace MyBlogApplication.Controllers
 {
     [Authorize]
+    [RequireHttps]
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
