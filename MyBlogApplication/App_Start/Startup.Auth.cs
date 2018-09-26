@@ -6,6 +6,7 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
 using MyBlogApplication.Models;
+using Owin.Security.Providers.LinkedIn;
 
 namespace MyBlogApplication
 {
@@ -57,6 +58,7 @@ namespace MyBlogApplication
             //app.UseFacebookAuthentication(
             //   appId: "",
             //   appSecret: "");
+            app.UseLinkedInAuthentication("86xnggvg6s7eyx","6XFLAyq6WypdE2Nv");
 
             app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             {
