@@ -16,7 +16,7 @@ h2, .h2 {
 
 #mainNav {
     background-color: black;
-    height: 75px
+    height: 45px
 }
 h1{
     padding-top: 30px
@@ -29,7 +29,6 @@ section {
 }
 .form-control{
     display: inline;
-    margin: 20px
 }
 #portfolio .portfolio-item .portfolio-caption 
 {

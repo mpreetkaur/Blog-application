@@ -11,8 +11,12 @@ using MyBlogApplication.Helpers;
 using MyBlogApplication.Models;
 using PagedList;
 using PagedList.Mvc;
-using System.Data.Entity;
+//using System.Data.Entity;
 using Microsoft.AspNet.Identity;
+using System.Net.Mail;
+using System.Web.Configuration;
+
+
 
 
 
@@ -25,19 +29,26 @@ namespace BlogWebsite.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
         // GET: BlogPosts
         public ActionResult Index(int? page, string searchString)
-        {
-            int pageSize = 3;
-            int pageNumber = (page ?? 1);
-            var postQuery = db.Posts.OrderBy(p => p.Created).AsQueryable();
-            if (!string.IsNullOrWhiteSpace(searchString))
-            {
-                postQuery = postQuery
-                    .Where(p => p.Title.Contains(searchString) ||
-                                p.Body.Contains(searchString) ||
-                                p.Slug.Contains(searchString) ||
-                                p.Comments.Any(t => t.Body.Contains(searchString))
-                           ).AsQueryable();
-            }
+            { 
+                //var emailService = new PersonalEmailService();
+                //var mailMessage = new MailMessage(
+                //    WebConfigurationManager.AppSettings["username"],
+                //    WebConfigurationManager.AppSettings["emailto"]);
+                //mailMessage.Body = "This is a test e-mail.";
+                //mailMessage.Subject = "Test e-mail";
+                //emailService.Send(mailMessage);
+                int pageSize = 3;
+                int pageNumber = (page ?? 1);
+                var postQuery = db.Posts.OrderBy(p => p.Created).AsQueryable();
+                if (!string.IsNullOrWhiteSpace(searchString))
+                    {
+                    postQuery = postQuery
+                        .Where(p => p.Title.Contains(searchString) ||
+                                    p.Body.Contains(searchString) ||
+                                    p.Slug.Contains(searchString) ||
+                                    p.Comments.Any(t => t.Body.Contains(searchString))
+                               ).AsQueryable();
+                    }
             var postList = postQuery.ToPagedList(pageNumber, pageSize);
             ViewBag.SearchString = searchString;
             return View(postList);
